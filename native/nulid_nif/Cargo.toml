@@ -1,0 +1,18 @@
+[package]
+name = "nulid_nif"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+authors = ["kakilangit <crates@kakilangit.dev>"]
+license = "MIT"
+
+[workspace]
+
+[lib]
+name = "nulid_nif"
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+nulid = "0.10"
+rustler = "0.37"
