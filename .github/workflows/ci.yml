@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Elixir
         uses: erlef/setup-beam@v1
@@ -25,26 +25,31 @@ jobs:
         with:
           toolchain: 1.88
           components: rustfmt,clippy
+          cache: false
+          rustflags: ""
 
       - name: Cache Elixir dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             deps
             _build
-          key: ${{ runner.os }}-mix-${{ hashFiles('mix.lock') }}
+          key: ${{ runner.os }}-mix-${{ hashFiles('mix.exs') }}
 
       - name: Cache Rust dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
             native/nulid_nif/target
-          key: ${{ runner.os }}-cargo-nif-${{ hashFiles('native/nulid_nif/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-nif-${{ hashFiles('native/nulid_nif/Cargo.toml') }}
 
       - name: Fetch dependencies
         run: make deps
+
+      - name: Compile
+        run: make compile
 
       - name: Format check
         run: make fmt-check
