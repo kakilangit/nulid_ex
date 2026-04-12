@@ -1,7 +1,7 @@
 defmodule Nulid.MixProject do
   use Mix.Project
 
-  @version "0.1.0"
+  @version "0.2.0"
   @source_url "https://github.com/kakilangit/nulid_ex"
 
   def project do
@@ -28,6 +28,7 @@ defmodule Nulid.MixProject do
   defp deps do
     [
       {:rustler, "~> 0.37.3", runtime: false},
+      {:ecto, "~> 3.12", optional: true},
       {:ex_doc, "~> 0.35", only: :dev, runtime: false}
     ]
   end
