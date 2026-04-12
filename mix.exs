@@ -44,7 +44,8 @@ defmodule Nulid.MixProject do
         "GitHub" => @source_url,
         "Rust crate" => "https://github.com/kakilangit/nulid"
       },
-      files: ~w(lib native .formatter.exs mix.exs README.md CHANGELOG.md LICENSE)
+      files:
+        ~w(lib native/nulid_nif/src native/nulid_nif/Cargo.toml .formatter.exs mix.exs README.md CHANGELOG.md LICENSE)
     ]
   end
 
