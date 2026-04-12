@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-04-12
+
+### Added
+
+- **Ecto integration** via `Nulid.Ecto` type (optional, requires `ecto ~> 3.12`)
+  - `use Ecto.Type` implementation with `cast/1`, `dump/1`, `load/1`, `autogenerate/0`
+  - Stored as 16-byte binary in the database, represented as 26-character Crockford Base32 string in Elixir
+  - Support for `@primary_key {:id, Nulid.Ecto, autogenerate: true}`
+  - Support for `@foreign_key_type Nulid.Ecto`
+  - Accepts both string and raw binary input in `cast/1`
+
+### Fixed
+
+- Hex package no longer includes Rust `target/` build artifacts
+
 ## [0.1.0] - 2026-04-12
 
 ### Added
@@ -29,5 +44,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `Nulid.Generator.generate_binary/1` - Generate monotonically increasing NULID binary
   - Distributed mode with `:node_id` option (0-65535) for multi-node deployments
 
-[Unreleased]: https://github.com/kakilangit/nulid_ex/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/kakilangit/nulid_ex/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/kakilangit/nulid_ex/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/kakilangit/nulid_ex/releases/tag/v0.1.0

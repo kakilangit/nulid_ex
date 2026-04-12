@@ -22,7 +22,7 @@ Add `nulid` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:nulid, "~> 0.1.0"}
+    {:nulid, "~> 0.2.0"}
   ]
 end
 ```
@@ -106,6 +106,63 @@ gen = Nulid.Generator.new(node_id: 1)
 ```
 
 The node ID is embedded in the random bits, guaranteeing cross-node uniqueness even with identical timestamps.
+
+### Ecto Integration
+
+`Nulid.Ecto` implements the `Ecto.Type` behaviour. Add `ecto` to your dependencies to enable it.
+
+#### Schema
+
+```elixir
+defmodule MyApp.Schema do
+  defmacro __using__(_) do
+    quote do
+      use Ecto.Schema
+      @primary_key {:id, Nulid.Ecto, autogenerate: true}
+      @foreign_key_type Nulid.Ecto
+    end
+  end
+end
+
+defmodule MyApp.User do
+  use MyApp.Schema
+
+  schema "users" do
+    field :name, :string
+    has_many :posts, MyApp.Post
+    timestamps()
+  end
+end
+
+defmodule MyApp.Post do
+  use MyApp.Schema
+
+  schema "posts" do
+    field :title, :string
+    belongs_to :user, MyApp.User
+    timestamps()
+  end
+end
+```
+
+#### Migration
+
+NULIDs are stored as 16-byte binaries:
+
+```elixir
+create table(:users, primary_key: false) do
+  add :id, :binary, primary_key: true, size: 16
+  add :name, :string
+  timestamps()
+end
+
+create table(:posts, primary_key: false) do
+  add :id, :binary, primary_key: true, size: 16
+  add :title, :string
+  add :user_id, references(:users, type: :binary), null: false
+  timestamps()
+end
+```
 
 ## Why NULID over ULID?
 
