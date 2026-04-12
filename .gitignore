@@ -8,3 +8,9 @@ erl_crash.dump
 *.beam
 /config/*.secret.exs
 .elixir_ls/
+mix.lock
+
+# Rust NIF build artifacts
+/priv/native/
+/native/nulid_nif/target/
+Cargo.lock
